@@ -4,6 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StoreProvider } from "easy-peasy";
 import { store } from "./store/StoreFront";
+import "./index.sass"
 
 ReactDOM.render(
   <React.StrictMode>
