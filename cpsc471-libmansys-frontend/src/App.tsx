@@ -1,12 +1,13 @@
-import { Navbar } from "views/Navbar";
+import { MainLayout } from "views/layouts";
 import "./App.sass";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
+    <div className="app">
+      <MainLayout/>
     </div>
   );
 }
 
 export default App;
+ 
