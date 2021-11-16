@@ -1,4 +1,7 @@
 .main-layout
-    @apply w-full h-full
+    @apply absolute w-full
     >.header
-        @apply fixed w-full
+        @apply relative w-full
+    >.body
+        @apply h-full overflow-auto
+        @apply flex justify-center
