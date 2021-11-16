@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
-import { MainLayout } from "views/layouts";
+import { AuthLayout, MainLayout } from "views/layouts";
 import "./App.sass";
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     <Router>
       <div className="app">
         <MainLayout />
+        {/* <AuthLayout /> */}
       </div>
     </Router>
   )
