@@ -5,14 +5,18 @@ import { MainManager } from "views/MainManager"
 /**
  * Props:
  * HTMLElements to be rendered in MainManager
- * Router to be rendered in Sidebar
+ * Router to be rendered in RouterBar
  */
 export const MainLayout = () => {
     return (
         <div className="main-layout">
-            <Navbar />
-            <RouterBar />
-            <MainManager />
+            <div className="header">
+                <Navbar />
+                <RouterBar />
+            </div>
+            <div className="body">
+                <MainManager />
+            </div>
         </div>
     )
 }
