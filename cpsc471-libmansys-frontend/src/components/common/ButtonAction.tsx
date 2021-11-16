@@ -1,5 +1,6 @@
 import { FC } from "react";
-import cx from "classnames" 
+import cx from "classnames"
+import "styles/components/ButtonAction.sass"
 
 type ButtonActionProp = { type?: "outlined" | "contained" | "text" } & React.HTMLProps<HTMLButtonElement>;
 
