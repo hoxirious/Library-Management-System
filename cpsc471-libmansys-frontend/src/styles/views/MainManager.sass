@@ -1,5 +1,12 @@
-@import "../utils/utils.sass"
+@import "styles/utils/utils.sass"
 
 .main-manager
-    @apply h-screen
+    @apply grid
+    @apply py-8 px-8 m-auto
+    @apply w-full
     background-color: $color-common
+.main-content
+    @apply grid h-full
+    padding: $padding-primary
+    column-gap: $component-common-gap
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 4fr))
