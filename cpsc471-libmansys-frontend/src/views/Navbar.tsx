@@ -1,4 +1,4 @@
-import { ButtonAction } from "components"
+import { ButtonAction } from "components/common"
 import "styles/views/Navbar.sass"
 
 export const Navbar = () => {
