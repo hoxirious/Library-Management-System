@@ -1892,6 +1892,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-table@^7.7.8":
+  "integrity" "sha512-OMhbPlf+uUGte3M1WdArEKeBkyQ1XJxKvFYs+o1dGGGyaSVIqxPPQmBZ6Skkw0V9y0F/kOY7rnTD8r9GbfpBOg=="
+  "resolved" "https://registry.npmjs.org/@types/react-table/-/react-table-7.7.8.tgz"
+  "version" "7.7.8"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.34":
   "integrity" "sha512-46FEGrMjc2+8XhHXILr+3+/sTe3OfzSPU9YGKILLrUYbQ1CLQC9Daqo1KzENGXAWwrFwiY0l4ZbF20gRvgpWTg=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.34.tgz"
