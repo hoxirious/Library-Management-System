@@ -8,7 +8,7 @@ const secret = process.env.JWT_SECRET;
 
 export const authenticateJWT = (req: Request, res: Response, next: Function) => {
   
-  if (req.path == '/login') return next();
+  if (req.path == '/login' && req.method == 'POST') return next();
 
   const authHeader = req.headers.authorization;
 
@@ -27,5 +27,13 @@ export const authenticateJWT = (req: Request, res: Response, next: Function) => 
   }
   else {
     res.sendStatus(401);
+  }
+}
+
+export const minimumRoleRequired = (requiredRole: String) => {
+  return (req: Request, res: Response, next: Function) => {
+    const {role} = res.locals.user;
+    if (role == requiredRole) return next();
+    else res.sendStatus(403);
   }
 }

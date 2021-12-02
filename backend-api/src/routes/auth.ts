@@ -4,3 +4,5 @@ import * as authController from '../controllers/auth';
 export const authRouter = express.Router();
 
 authRouter.post('/login', authController.login);
+
+authRouter.patch('/login', authController.changePassword);
