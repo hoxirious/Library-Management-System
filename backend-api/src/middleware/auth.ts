@@ -7,6 +7,9 @@ dotenv.config();
 const secret = process.env.JWT_SECRET;
 
 export const authenticateJWT = (req: Request, res: Response, next: Function) => {
+  
+  if (req.path == '/login') return next();
+
   const authHeader = req.headers.authorization;
 
   if (authHeader) {
@@ -14,10 +17,11 @@ export const authenticateJWT = (req: Request, res: Response, next: Function) => 
 
     jwt.verify(token, secret, (err, user) => {
       if (err) {
+        console.log(err);
         return res.sendStatus(403);
       }
 
-      req.user = user;
+      res.locals.user = user;
       next();
     });
   }
