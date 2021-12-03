@@ -33,7 +33,12 @@ export const authenticateJWT = (req: Request, res: Response, next: Function) => 
 export const minimumRoleRequired = (requiredRole: String) => {
   return (req: Request, res: Response, next: Function) => {
     const {role} = res.locals.user;
-    if (role == requiredRole) return next();
-    else res.sendStatus(403);
+    if (role == 'SYSADMIN') return next();
+    else if (requiredRole == 'LIBRARIAN' && role == 'LIBRARIAN') return next();
+    else {
+      const errString = `You do not have the necessary permissions to perform this action.
+      You are authenticated as ` + role +', and this action requires at least ' + requiredRole + '.';
+      res.status(403).send(errString);
+    }
   }
 }
