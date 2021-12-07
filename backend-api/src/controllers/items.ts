@@ -8,17 +8,17 @@ export const addItem = (req: Request, res: Response) => {
   const insertItemQuery = `INSERT INTO ITEM (NAME, AVAILABLE, LOCATIONCODE, LIBRARY_NAME, PUB_ID) 
   VALUES (?, ?, ?, ?, ?)`;
 
-  if ((type == "book" && author_id !== null && pages !== null) || 
-  (type == "cd" && length !== null) || (type == "magazine" && pages !== null)) {
+  if ((type == "book" && author_id != null && pages != null) || 
+  (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
     const a_id = type == "book" ? author_id : 0;
     db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
-      if (!err && (((<RowDataPacket> result).length > 0) || type !== "book")) {
+      if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
         db.execute(insertItemQuery, [name, amount, location, library, pub_id], err => {
           if (!err) {
             db.query(`SELECT LAST_INSERT_ID() AS ID`, (err, result) => {
               const item_id = (<RowDataPacket> result)[0].ID;
               const info = type == "book" || type == "magazine" ? pages : length;
-              db.execute('INSERT INTO ' + type + ' VALUES (?, ?)', [item_id, info]);
+              db.execute(`INSERT INTO ${type} VALUES (?, ?)`, [item_id, info]);
               if (type == "book") {
                 db.execute(`INSERT INTO WRITES VALUES (?, ?)`, [a_id, item_id]);
               }
@@ -51,11 +51,11 @@ export const editItem = (req: Request, res: Response) => {
       const editItemQuery = `UPDATE ITEM SET NAME=?, AVAILABLE=?, LOCATIONCODE=?, LIBRARY_NAME=?, PUB_ID=? 
       WHERE ITEM_ID=?`;
 
-      if ((type == "book" && author_id !== null && pages !== null) || 
-      (type == "cd" && length !== null) || (type == "magazine" && pages !== null)) {
+      if ((type == "book" && author_id != null && pages != null) || 
+      (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
         const a_id = type == "book" ? author_id : 0;
         db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
-          if (!err && (((<RowDataPacket> result).length > 0) || type !== "book")) {
+          if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
             db.execute(editItemQuery, [name, amount, location, library, pub_id, item_id], err => {
               if (!err) {
                 db.execute(`DELETE FROM WRITES WHERE BOOK_ID=?`, [item_id]);
@@ -150,7 +150,7 @@ export const getAllItems = (req: Request, res: Response) => {
       }
       else if (typeof typeParam == "string") {
         resultArr = resultArr.filter((e: any) => {
-          return e.type == typeParam;
+          return e.type == typeParam.toLowerCase();
         });
         res.status(200).json(resultArr);
       }
@@ -196,7 +196,7 @@ export const getItemFromID = (req: Request, res: Response) => {
   });
 }
 
-function formatGetOutput(e: any): any {
+const formatGetOutput = (e: any): any => {
   let type: String;
 
   if (e.BOOK_ID) type = "book";
@@ -205,7 +205,7 @@ function formatGetOutput(e: any): any {
 
   const pages = type == "book" ? e.BPAGES : e.MPAGES;
 
-  const item = {
+  return {
     "item_id": e.ITEM_ID,
     "name": e.NAME,
     "amount": e.AVAILABLE,
@@ -217,7 +217,5 @@ function formatGetOutput(e: any): any {
     "author_id": e.AUTHOR_ID,
     "pages": pages,
     "length": e.LENGTH
-  }
-
-  return item;
+  };
 }

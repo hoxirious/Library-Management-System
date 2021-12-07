@@ -23,6 +23,7 @@ export const login = (req: Request, res: Response) => {
         const tokenBody = {
           username: user.USERNAME,
           role: user.USERTYPE,
+          library: user.LIBRARY_NAME
         }
         const accessToken = jwt.sign(tokenBody, secret);
     
@@ -44,8 +45,9 @@ export const changePassword = (req: Request, res:Response) => {
   const {library, username, old_password, new_password} = req.body;
 
   const jwt_username = res.locals.user.username;
+  const jwt_library = res.locals.user.library;
 
-  if (jwt_username !== username) return res.sendStatus(403);
+  if (jwt_username != username || jwt_library != library) return res.sendStatus(403);
 
   let queryString = `SELECT * FROM LOGIN WHERE USERNAME=? AND LIBRARY_NAME=?`;
 
