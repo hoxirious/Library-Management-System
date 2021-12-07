@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => res.send('The server is running.'));
 
-app.use(router);
+app.use('/api', router);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
