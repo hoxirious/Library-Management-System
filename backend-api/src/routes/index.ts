@@ -4,6 +4,8 @@ import { authRouter } from './auth';
 import { itemsRouter } from './items';
 import { borrowRouter } from './borrow';
 import { returnRouter } from './return';
+import { librarianRouter } from './librarian';
+import { studentRouter } from './student';
 
 export const router = express.Router();
 
@@ -13,3 +15,5 @@ router.use(authRouter);
 router.use(itemsRouter);
 router.use(borrowRouter);
 router.use(returnRouter);
+router.use(librarianRouter);
+router.use(studentRouter);
