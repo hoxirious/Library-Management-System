@@ -6,6 +6,7 @@ import { borrowRouter } from './borrow';
 import { returnRouter } from './return';
 import { librarianRouter } from './librarian';
 import { studentRouter } from './student';
+import { libraryRouter } from './library';
 
 export const router = express.Router();
 
@@ -17,3 +18,4 @@ router.use(borrowRouter);
 router.use(returnRouter);
 router.use(librarianRouter);
 router.use(studentRouter);
+router.use(libraryRouter);
