@@ -5,39 +5,44 @@ import { RowDataPacket } from 'mysql2';
 export const addItemToBorrowed = (req: Request, res: Response) => {
   const {student_id, item_id, date} = req.body;
 
-  db.execute(`SELECT * FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id], (err, result) => {
-    if (!err && (<RowDataPacket> result).length == 0) {
-      db.execute(`SELECT AVAILABLE FROM ITEM WHERE ITEM_ID=?`, [item_id], (err, result) => {
-        const resultArr = <RowDataPacket> result;
-        if (!err && resultArr.length > 0) {
-          const amount = resultArr[0].AVAILABLE;
-          if (amount > 0) {
-            db.execute(`UPDATE ITEM SET AVAILABLE=AVAILABLE-1 WHERE ITEM_ID=?`, [item_id]);
-            db.execute(`INSERT INTO BORROW VALUES (?, ?, ?, 0)`, [student_id, item_id, date], err => {
-              if (!err) {
-                res.location(`/api/borrowed/${student_id}/${item_id}`)
-                res.sendStatus(201);
-              }
-              else {
-                res.status(400).send("Invalid data for request.");
-              }
-            });
+  if (student_id && item_id && date) {
+    db.execute(`SELECT * FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id], (err, result) => {
+      if (!err && (<RowDataPacket> result).length == 0) {
+        db.execute(`SELECT AVAILABLE FROM ITEM WHERE ITEM_ID=?`, [item_id], (err, result) => {
+          const resultArr = <RowDataPacket> result;
+          if (!err && resultArr.length > 0) {
+            const amount = resultArr[0].AVAILABLE;
+            if (amount > 0) {
+              db.execute(`UPDATE ITEM SET AVAILABLE=AVAILABLE-1 WHERE ITEM_ID=?`, [item_id]);
+              db.execute(`INSERT INTO BORROW VALUES (?, ?, ?, 0)`, [student_id, item_id, date], err => {
+                if (!err) {
+                  res.location(`/api/borrowed/${student_id}/${item_id}`)
+                  res.sendStatus(201);
+                }
+                else {
+                  res.status(400).send("Invalid data for request.");
+                }
+              });
+            }
+            else {
+              res.status(403).send("This item has no more copies available.");
+            }
           }
           else {
-            res.status(403).send("This item has no more copies available.");
+            res.status(400).send("Item does not exist.");
           }
-        }
-        else {
-          res.status(400).send("Item does not exist.");
-        }
-      });
-
-      
-    }
-    else {
-      res.status(403).send("This item is already borrowed by this student.");
-    }
-  });
+        });
+  
+        
+      }
+      else {
+        res.status(403).send("This item is already borrowed by this student.");
+      }
+    });
+  }
+  else {
+    res.status(400).send("Invalid data for request.");
+  }
 }
 
 export const getAllBorrowed = (req: Request, res: Response) => {

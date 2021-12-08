@@ -7,3 +7,5 @@ export const libraryRouter = express.Router();
 libraryRouter.post('/libraries', minimumRoleRequired('SYSADMIN'), libraryController.addLibrary);
 
 libraryRouter.get('/libraries', libraryController.getAllLibraries);
+
+libraryRouter.get('/libraries/:name', libraryController.getLibraryFromName);

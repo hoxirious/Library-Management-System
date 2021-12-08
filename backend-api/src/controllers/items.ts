@@ -5,37 +5,43 @@ import { RowDataPacket } from 'mysql2';
 export const addItem = (req: Request, res: Response) => {
   const {name, amount, location, library, pub_id, type, genre, author_id, pages, length} = req.body;
 
-  const insertItemQuery = `INSERT INTO ITEM (NAME, AVAILABLE, LOCATIONCODE, LIBRARY_NAME, PUB_ID) 
-  VALUES (?, ?, ?, ?, ?)`;
-
-  if ((type == "book" && author_id != null && pages != null) || 
-  (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
-    const a_id = type == "book" ? author_id : 0;
-    db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
-      if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
-        db.execute(insertItemQuery, [name, amount, location, library, pub_id], err => {
-          if (!err) {
-            db.query(`SELECT LAST_INSERT_ID() AS ID`, (err, result) => {
-              const item_id = (<RowDataPacket> result)[0].ID;
-              const info = type == "book" || type == "magazine" ? pages : length;
-              db.execute(`INSERT INTO ${type} VALUES (?, ?)`, [item_id, info]);
-              if (type == "book") {
-                db.execute(`INSERT INTO WRITES VALUES (?, ?)`, [a_id, item_id]);
-              }
-              db.execute(`INSERT INTO GENRE VALUES (?, ?)`, [item_id, genre]);
-              res.location('/api/items/' + item_id);
-              res.status(201).json({ item_id: item_id });
-            });
-          }
-          else {
-            res.status(400).send("Invalid data for request.");
-          }
-        });
-      }
-      else {
-        res.status(400).send("Invalid data for request.");
-      }
-    });
+  if (name && amount && typeof location != 'undefined' && library && pub_id && type && genre
+  && author_id && pages && length) {
+    const insertItemQuery = `INSERT INTO ITEM (NAME, AVAILABLE, LOCATIONCODE, LIBRARY_NAME, PUB_ID) 
+    VALUES (?, ?, ?, ?, ?)`;
+  
+    if ((type == "book" && author_id != null && pages != null) || 
+    (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
+      const a_id = type == "book" ? author_id : 0;
+      db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
+        if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
+          db.execute(insertItemQuery, [name, amount, location, library, pub_id], err => {
+            if (!err) {
+              db.query(`SELECT LAST_INSERT_ID() AS ID`, (err, result) => {
+                const item_id = (<RowDataPacket> result)[0].ID;
+                const info = type == "book" || type == "magazine" ? pages : length;
+                db.execute(`INSERT INTO ${type} VALUES (?, ?)`, [item_id, info]);
+                if (type == "book") {
+                  db.execute(`INSERT INTO WRITES VALUES (?, ?)`, [a_id, item_id]);
+                }
+                db.execute(`INSERT INTO GENRE VALUES (?, ?)`, [item_id, genre]);
+                res.location('/api/items/' + item_id);
+                res.status(201).json({ item_id: item_id });
+              });
+            }
+            else {
+              res.status(400).send("Invalid data for request.");
+            }
+          });
+        }
+        else {
+          res.status(400).send("Invalid data for request.");
+        }
+      });
+    }
+    else {
+      res.status(400).send("Invalid data for request.");
+    }
   }
   else {
     res.status(400).send("Invalid data for request.");
@@ -48,43 +54,49 @@ export const editItem = (req: Request, res: Response) => {
     if (!err && (<RowDataPacket> result).length > 0) {
       const {name, amount, location, library, pub_id, type, genre, author_id, pages, length} = req.body;
 
-      const editItemQuery = `UPDATE ITEM SET NAME=?, AVAILABLE=?, LOCATIONCODE=?, LIBRARY_NAME=?, PUB_ID=? 
-      WHERE ITEM_ID=?`;
-
-      if ((type == "book" && author_id != null && pages != null) || 
-      (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
-        const a_id = type == "book" ? author_id : 0;
-        db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
-          if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
-            db.execute(editItemQuery, [name, amount, location, library, pub_id, item_id], err => {
-              if (!err) {
-                db.execute(`DELETE FROM WRITES WHERE BOOK_ID=?`, [item_id]);
-                db.execute(`DELETE FROM BOOK WHERE BOOK_ID=?`, [item_id]);
-                db.execute(`DELETE FROM CD WHERE CD_ID=?`, [item_id]);
-                db.execute(`DELETE FROM MAGAZINE WHERE MAGAZINE_ID=?`, [item_id]);
-
-                if (type == "book") {
-                  db.execute(`INSERT INTO BOOK VALUES (?, ?)`, [item_id, pages]);
-                  db.execute(`INSERT INTO WRITES VALUES (?, ?)`, [a_id, item_id]);
+      if (name && amount && typeof location != 'undefined' && library && pub_id && type && genre
+      && author_id && pages && length) {
+        const editItemQuery = `UPDATE ITEM SET NAME=?, AVAILABLE=?, LOCATIONCODE=?, LIBRARY_NAME=?, PUB_ID=? 
+        WHERE ITEM_ID=?`;
+  
+        if ((type == "book" && author_id != null && pages != null) || 
+        (type == "cd" && length != null) || (type == "magazine" && pages != null)) {
+          const a_id = type == "book" ? author_id : 0;
+          db.execute(`SELECT * FROM AUTHOR WHERE A_ID=?`, [a_id], (err, result) => {
+            if (!err && (((<RowDataPacket> result).length > 0) || type != "book")) {
+              db.execute(editItemQuery, [name, amount, location, library, pub_id, item_id], err => {
+                if (!err) {
+                  db.execute(`DELETE FROM WRITES WHERE BOOK_ID=?`, [item_id]);
+                  db.execute(`DELETE FROM BOOK WHERE BOOK_ID=?`, [item_id]);
+                  db.execute(`DELETE FROM CD WHERE CD_ID=?`, [item_id]);
+                  db.execute(`DELETE FROM MAGAZINE WHERE MAGAZINE_ID=?`, [item_id]);
+  
+                  if (type == "book") {
+                    db.execute(`INSERT INTO BOOK VALUES (?, ?)`, [item_id, pages]);
+                    db.execute(`INSERT INTO WRITES VALUES (?, ?)`, [a_id, item_id]);
+                  }
+                  else if (type == "cd") {
+                    db.execute(`INSERT INTO CD VALUES (?, ?)`, [item_id, length]);
+                  }
+                  else if (type == "magazine") {
+                    db.execute(`INSERT INTO MAGAZINE VALUES (?, ?)`, [item_id, pages]);
+                  }
+                  db.execute(`UPDATE GENRE SET GENRE=? WHERE ITEM_ID=?`, [genre, item_id]);
+                  res.sendStatus(200);
                 }
-                else if (type == "cd") {
-                  db.execute(`INSERT INTO CD VALUES (?, ?)`, [item_id, length]);
+                else {
+                  res.status(400).send("Invalid data for request.");
                 }
-                else if (type == "magazine") {
-                  db.execute(`INSERT INTO MAGAZINE VALUES (?, ?)`, [item_id, pages]);
-                }
-                db.execute(`UPDATE GENRE SET GENRE=? WHERE ITEM_ID=?`, [genre, item_id]);
-                res.sendStatus(200);
-              }
-              else {
-                res.status(400).send("Invalid data for request.");
-              }
-            });
-          }
-          else {
-            res.status(400).send("Invalid data for request.");
-          }
-        });
+              });
+            }
+            else {
+              res.status(400).send("Invalid data for request.");
+            }
+          });
+        }
+        else {
+          res.status(400).send("Invalid data for request.");
+        }
       }
       else {
         res.status(400).send("Invalid data for request.");

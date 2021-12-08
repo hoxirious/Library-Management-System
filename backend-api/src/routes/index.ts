@@ -7,6 +7,7 @@ import { returnRouter } from './return';
 import { librarianRouter } from './librarian';
 import { studentRouter } from './student';
 import { libraryRouter } from './library';
+import { fineRouter } from './fine';
 
 export const router = express.Router();
 
@@ -19,3 +20,4 @@ router.use(returnRouter);
 router.use(librarianRouter);
 router.use(studentRouter);
 router.use(libraryRouter);
+router.use(fineRouter);

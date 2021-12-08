@@ -5,19 +5,24 @@ import { RowDataPacket } from 'mysql2';
 export const addItemToReturned = (req: Request, res: Response) => {
   const {student_id, item_id, borrow_date, return_date} = req.body;
 
-  db.execute(`SELECT * FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id], (err, result) => {
-    if (!err && (<RowDataPacket> result).length > 0) {
-      db.execute(`UPDATE ITEM SET AVAILABLE=AVAILABLE+1 WHERE ITEM_ID=?`, [item_id]);
-      db.execute(`DELETE FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id]);
-      db.execute(`INSERT INTO RETURN1 VALUES (?, ?, ?, ?)`, [student_id, item_id, borrow_date, return_date], err => {
-        if (!err) res.sendStatus(201);
-        else res.status(400).send("Invalid data for request.");
-      });
-    }
-    else {
-      res.status(404).send("Can't return item that is not borrowed.");
-    }
-  });
+  if (student_id && item_id && borrow_date && return_date) {
+    db.execute(`SELECT * FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id], (err, result) => {
+      if (!err && (<RowDataPacket> result).length > 0) {
+        db.execute(`UPDATE ITEM SET AVAILABLE=AVAILABLE+1 WHERE ITEM_ID=?`, [item_id]);
+        db.execute(`DELETE FROM BORROW WHERE STUDENT_ID=? AND ITEM_ID=?`, [student_id, item_id]);
+        db.execute(`INSERT INTO RETURN1 VALUES (?, ?, ?, ?)`, [student_id, item_id, borrow_date, return_date], err => {
+          if (!err) res.sendStatus(201);
+          else res.status(400).send("Invalid data for request.");
+        });
+      }
+      else {
+        res.status(404).send("Can't return item that is not borrowed.");
+      }
+    });
+  }
+  else {
+    res.status(400).send("Invalid data for request.");
+  }
 }
 
 export const getAllReturns = (req: Request, res: Response) => {
