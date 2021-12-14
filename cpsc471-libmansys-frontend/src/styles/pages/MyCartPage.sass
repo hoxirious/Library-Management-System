@@ -1,0 +1,11 @@
+@import "styles/utils/utils.sass"
+
+.cart-page
+    @apply grid
+    padding: $padding-primary
+    column-gap: $component-common-gap
+    grid-template-columns: repeat(2, minmax(14rem, 4fr))
+    >.cart-items
+        @apply h-full
+    >.cart-billing
+        @apply h-full
