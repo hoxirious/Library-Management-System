@@ -29,7 +29,8 @@ export const login = (req: Request, res: Response) => {
           const accessToken = jwt.sign(tokenBody, secret);
       
           res.json({
-            accessToken
+            accessToken,
+            userType: user.USERTYPE
           });
         }
         else {
