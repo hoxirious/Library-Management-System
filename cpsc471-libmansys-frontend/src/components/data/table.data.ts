@@ -2,54 +2,63 @@ import { ColumnDefinitionType } from "components/common/Table";
 
 interface Cat {
   name: string;
-  age: number;
-  gender: string;
-  color: string;
+  UCID: string;
+  Fine: number;
+  ClearFine: string;
   activityLevel?: string; // optional, same as string | undefined
   favoriteFood?: string; // optional, same as string | undefined
 }
 
 export const data: Cat[] = [
   {
-    name: "Mittens",
-    color: "black",
-    age: 2,
-    gender: "female",
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
     activityLevel: "hight",
     favoriteFood: "milk",
   },
   {
-    name: "Mons",
-    color: "grey",
-    age: 2,
-    gender: "male",
-    favoriteFood: "old socks",
-    activityLevel: "medium",
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
+    activityLevel: "hight",
+    favoriteFood: "milk",
   },
   {
-    name: "Luna",
-    color: "black",
-    age: 2,
-    gender: "female",
-    activityLevel: "medium",
-    favoriteFood: "fish",
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
+    activityLevel: "hight",
+    favoriteFood: "milk",
   },
   {
-    name: "Bella",
-    color: "grey",
-    age: 1,
-    gender: "female",
-    activityLevel: "high",
-    favoriteFood: "mice",
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
+    activityLevel: "hight",
+    favoriteFood: "milk",
   },
   {
-    name: "Oliver",
-    color: "orange",
-    age: 1,
-    gender: "male",
-    activityLevel: "low",
-    favoriteFood: "fish",
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
+    activityLevel: "hight",
+    favoriteFood: "milk",
   },
+  {
+    name: "Luca Lacu",
+    UCID: "300864624",
+    Fine: 5.02,
+    ClearFine: "Button to clear fine",
+    activityLevel: "hight",
+    favoriteFood: "milk",
+  },
+  
 ];
 
 export const columns: ColumnDefinitionType<Cat, keyof Cat>[] = [
@@ -59,11 +68,15 @@ export const columns: ColumnDefinitionType<Cat, keyof Cat>[] = [
     width: 150,
   },
   {
-    key: "age",
-    header: "Age in years",
+    key: "UCID",
+    header: "UCID",
   },
   {
-    key: "color",
-    header: "Color",
+    key: "Fine",
+    header: "Fine",
+  },
+  {
+    key: "ClearFine",
+    header: "Clear Fine",
   },
 ];

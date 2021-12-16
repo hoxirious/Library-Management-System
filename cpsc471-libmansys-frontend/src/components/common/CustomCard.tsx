@@ -1,16 +1,25 @@
+import { ReactElement, ReactNode } from "react"
 import "styles/components/CustomCard.sass"
+import cx from "classnames"
 
 interface CustomCardProps {
-    title: string;
-    genre: string;
+    header: ReactNode,
+    children: ReactElement;
+    footer?: ReactNode,
+    cardStyle?: string;
+    headerStyle?: string;
+    childrenStyle?: string;
+    footerStyle?: string;
 }
 
-export const CustomCard = ({title,genre}:CustomCardProps) => {
+export const CustomCard = ({ header, footer, children, cardStyle, headerStyle, footerStyle, childrenStyle }: CustomCardProps) => {
     return (
-        <div className="custom-card">
-            <p className = "title">Title: {title}</p>
-            <p className = "genre">Genre: {genre}</p>
-            <input type="checkbox"></input>
+        <div className={cx("custom-card", { [`${cardStyle}`]: cardStyle })}>
+            <div className="card-header">{header}</div>
+            <div className="card-body">{children}</div>
+
+            {footer &&
+                <div className="card-footer">{footer}</div>}
         </div>
     )
 }

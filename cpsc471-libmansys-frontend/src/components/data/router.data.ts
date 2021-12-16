@@ -4,9 +4,10 @@ export const routeMap = {
   book: "/book",
   magazine: "/magazine",
   cd: "/cd",
+  student: "/student",
 } as const;
 
-const routeNameList = ["Book", "Magazine", "CD"] as const;
+const routeNameList = ["Book", "Magazine", "CD", "Students"] as const;
 
 export type RouteKey = keyof typeof routeMap;
 export type RouteValue = typeof routeMap[RouteKey];
@@ -24,5 +25,9 @@ export const routeInfoMap: Record<RouteKey, RouteInfo> = {
   cd: {
     displayName: routeNameList[2],
     routeKey: "cd",
+  },
+  student: {
+    displayName: routeNameList[3],
+    routeKey: "student",
   },
 };
