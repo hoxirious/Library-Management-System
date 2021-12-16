@@ -8,12 +8,12 @@ export const bookColumns: ColumnDefinitionType<BookInfo, keyof BookInfo>[] = [
   },
   {
     key: "name",
-    header: "Name",
+    header: "Item Name",
     width: 150,
   },
   {
     key: "amount",
-    header: "Amount",
+    header: "Number Available",
   },
   {
     key: "location",
@@ -36,7 +36,7 @@ export const bookColumns: ColumnDefinitionType<BookInfo, keyof BookInfo>[] = [
     header: "Genre",
   },
   {
-    key: "authorId",
+    key: "author_id",
     header: "Author Id",
   },
   {
@@ -54,12 +54,12 @@ export const magazineColumns: ColumnDefinitionType<
   },
   {
     key: "name",
-    header: "Name",
+    header: "Item Name",
     width: 150,
   },
   {
     key: "amount",
-    header: "Amount",
+    header: "Number Available",
   },
   {
     key: "location",
@@ -94,12 +94,12 @@ export const cdColumns: ColumnDefinitionType<CdInfo, keyof CdInfo>[] = [
   },
   {
     key: "name",
-    header: "Name",
+    header: "Item Name",
     width: 150,
   },
   {
     key: "amount",
-    header: "Amount",
+    header: "Number Available",
   },
   {
     key: "location",

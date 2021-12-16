@@ -1,11 +1,12 @@
 import TableHeader from "./TableHeader";
 import TableRows from "./TableRows";
 import "styles/components/Table.sass";
+import { TitleValue } from "models";
 
 
 export type ColumnDefinitionType<T, K extends keyof T> = {
     key: K;
-    header: string;
+    header: TitleValue;
     width?: number;
 }
 

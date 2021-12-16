@@ -1,6 +1,3 @@
-import { CustomCard } from "components/common"
-import Table from "components/common/Table"
-// import { columns, data } from "components/data/columns.data"
 import "styles/pages/StudentPage.sass"
 
 export const StudentPage = () => {

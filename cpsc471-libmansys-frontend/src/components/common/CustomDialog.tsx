@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cx from "classnames";
 import { ReactElement, ReactNode, useMemo, useRef } from "react";
-
+import "styles/components/CustomDialog.sass";
 
 interface CustomDialogProp {
     anchorRef?: HTMLElement

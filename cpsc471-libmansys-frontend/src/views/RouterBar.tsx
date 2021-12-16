@@ -20,7 +20,7 @@ export const RouterBar = ({ userType }: RouterBarProp) => {
                 ))
             }
             {userType === UserType.student &&
-                Object.keys(routeMap).map((route) => (
+                Object.keys(routeMap).map((route) =>
                     route !== "student" &&
                     (<ButtonRoute
                         buttonTitle={routeInfoMap[route as RouteKey].displayName}
@@ -28,7 +28,7 @@ export const RouterBar = ({ userType }: RouterBarProp) => {
                         buttonStyle="button-route"
                         routeTo={routeInfoMap[route as RouteKey].routeKey}
                     />)
-                ))
+                )
             }
         </div>
     )
