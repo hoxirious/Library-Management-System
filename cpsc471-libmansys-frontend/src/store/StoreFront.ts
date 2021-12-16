@@ -1,12 +1,17 @@
 import { createStore, createTypedHooks } from "easy-peasy";
-import { tableModel, TableModel } from "./misc/table.store";
+import { authModel, AuthModel } from "./auth/auth.store";
+import { TableModel, tableModel, itemModel, ItemModel } from "./misc";
 
 export interface StoreModel {
   tableModel: TableModel;
+  authModel: AuthModel;
+  itemModel: ItemModel;
 }
 
 export const model: StoreModel = {
   tableModel,
+  authModel,
+  itemModel,
 };
 
 export const store = createStore(model);

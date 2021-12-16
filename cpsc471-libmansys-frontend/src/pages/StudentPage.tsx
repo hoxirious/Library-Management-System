@@ -1,6 +1,6 @@
 import { CustomCard } from "components/common"
 import Table from "components/common/Table"
-import { columns, data } from "components/data/table.data"
+// import { columns, data } from "components/data/columns.data"
 import "styles/pages/StudentPage.sass"
 
 export const StudentPage = () => {
@@ -11,7 +11,7 @@ export const StudentPage = () => {
                 footer={<input type="checkbox"></input>}
                 children={<p>Genre: Anime</p>}
             /> */}
-            <Table data={data} columns={columns} />
+            {/* <Table data={data} columns={columns} /> */}
         </div>
     )
 }

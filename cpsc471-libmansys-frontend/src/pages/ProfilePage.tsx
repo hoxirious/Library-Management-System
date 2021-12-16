@@ -1,9 +1,12 @@
-import { CustomCard } from "components/common"
-import "styles/pages/ProfilePage.sass"
+import { CustomCard } from "components/common";
+import "styles/pages/ProfilePage.sass";
+
 
 export const ProfilePage = () => {
     return (
         <div className="profile-page">
+
+
             <CustomCard
                 header={<p>Profile</p>}
                 children={

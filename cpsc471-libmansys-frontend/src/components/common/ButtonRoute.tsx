@@ -1,7 +1,7 @@
-import { routeMap } from "components/data";
+import { pathMap } from "components/data";
 import { RouteProps } from "components/utils";
 import { NavLink } from "react-router-dom";
-import "styles/components/ButtonRoute.sass"
+import "styles/components/ButtonRoute.sass";
 
 export interface ButtonRouteProps extends RouteProps {
     buttonTitle: string;
@@ -17,7 +17,7 @@ export const ButtonRoute = ({
     buttonStyle,
 }: ButtonRouteProps) => {
 
-    const routePath = routeTo ? routeMap[routeTo] as string : "";
+    const routePath = routeTo ? pathMap[routeTo] as string : "";
 
     return (
         <NavLink
