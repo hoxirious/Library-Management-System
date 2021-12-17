@@ -5,8 +5,8 @@ import { RowDataPacket } from 'mysql2';
 export const addItem = (req: Request, res: Response) => {
   const {name, amount, location, library, pub_id, type, genre, author_id, pages, length} = req.body;
 
-  if (name && amount && typeof location != 'undefined' && library && pub_id && type && genre
-  && author_id && pages && length) {
+  if (name && typeof amount != 'undefined' && typeof location != 'undefined' && library && pub_id && type && genre
+  && typeof author_id != 'undefined' && typeof pages != 'undefined' && typeof length != 'undefined') {
     const insertItemQuery = `INSERT INTO ITEM (NAME, AVAILABLE, LOCATIONCODE, LIBRARY_NAME, PUB_ID) 
     VALUES (?, ?, ?, ?, ?)`;
   
@@ -54,8 +54,8 @@ export const editItem = (req: Request, res: Response) => {
     if (!err && (<RowDataPacket> result).length > 0) {
       const {name, amount, location, library, pub_id, type, genre, author_id, pages, length} = req.body;
 
-      if (name && amount && typeof location != 'undefined' && library && pub_id && type && genre
-      && author_id && pages && length) {
+      if (name && typeof amount != 'undefined' && typeof location != 'undefined' && library && pub_id && type && genre
+      && typeof author_id != 'undefined' && typeof pages != 'undefined' && typeof length != 'undefined') {
         const editItemQuery = `UPDATE ITEM SET NAME=?, AVAILABLE=?, LOCATIONCODE=?, LIBRARY_NAME=?, PUB_ID=? 
         WHERE ITEM_ID=?`;
   
