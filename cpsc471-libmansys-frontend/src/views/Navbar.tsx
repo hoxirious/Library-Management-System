@@ -13,8 +13,6 @@ export const Navbar = () => {
                     <input placeholder="Search your item" className="search"></input>
                 </div>
                 <div className="navbar__content--block-right">
-                    <ButtonAction>My Cart</ButtonAction>
-                    <ButtonAction>Profile</ButtonAction>
                     <ButtonAction
                         onClick={() => logout()}
                     >Logout</ButtonAction>

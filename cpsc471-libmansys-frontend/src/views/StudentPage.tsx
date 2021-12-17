@@ -1,8 +1,8 @@
-import "styles/pages/StudentPage.sass"
+import "styles/viewss/StudentPage.sass"
 
-export const StudentPage = () => {
+export const StudentView = () => {
     return (
-        <div className="student-page">
+        <div className="student-view">
             {/* <CustomCard
                 header={<p>Title: Naruto</p>}
                 footer={<input type="checkbox"></input>}
