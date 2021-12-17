@@ -27,10 +27,17 @@ export const login = (req: Request, res: Response) => {
             library: user.LIBRARY_NAME
           }
           const accessToken = jwt.sign(tokenBody, secret);
-      
-          res.json({
-            accessToken,
-            userType: user.USERTYPE
+
+          const tableName = user.USERTYPE == "STUDENT" ? "STUDENT" : "LIBRARIAN";
+
+          db.execute(`SELECT * FROM ${tableName} WHERE USERNAME=? AND LIBRARY_NAME=?`, [username, library], (err, result) => {
+            const resultArr = <RowDataPacket> result;
+
+            res.json({
+              accessToken,
+              userType: user.USERTYPE,
+              user_id: resultArr[0][`${tableName}_ID`]
+            });
           });
         }
         else {
