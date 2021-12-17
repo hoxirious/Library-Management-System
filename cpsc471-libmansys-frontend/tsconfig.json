@@ -22,5 +22,5 @@
     "strictPropertyInitialization": false,
     "downlevelIteration": true
   },
-  "include": ["src", "src/@types/**/*", "src/.env"]
+  "include": ["src", "src/@types/**/*", "src/.env", "src/views/.tsx"]
 }

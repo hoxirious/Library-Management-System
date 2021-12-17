@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/react-router": "^5.1.17",
     "@types/react-table": "^7.7.8",
+    "axios": "^0.24.0",
     "classnames": "^2.3.1",
     "easy-peasy": "^5.0.4",
     "node-sass": "6.0.1",

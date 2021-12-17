@@ -1,1 +1,1 @@
-export * from "./router.util"
+export * from "../../models/router.model"

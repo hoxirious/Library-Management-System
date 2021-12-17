@@ -1,7 +1,10 @@
 import { ButtonAction } from "components/common"
+import { useStoreActions } from "store/StoreFront"
 import "styles/views/Navbar.sass"
 
 export const Navbar = () => {
+    const { logout } = useStoreActions((store) => store.authModel);
+
     return (
         <div className="navbar">
             <div className="navbar__content">
@@ -12,6 +15,9 @@ export const Navbar = () => {
                 <div className="navbar__content--block-right">
                     <ButtonAction>My Cart</ButtonAction>
                     <ButtonAction>Profile</ButtonAction>
+                    <ButtonAction
+                        onClick={() => logout()}
+                    >Logout</ButtonAction>
                 </div>
             </div>
         </div>

@@ -1,10 +1,12 @@
 import TableHeader from "./TableHeader";
 import TableRows from "./TableRows";
+import "styles/components/Table.sass";
+import { TitleValue } from "models";
 
 
 export type ColumnDefinitionType<T, K extends keyof T> = {
     key: K;
-    header: string;
+    header: TitleValue;
     width?: number;
 }
 
@@ -19,13 +21,15 @@ const style = {
 
 const Table = <T, K extends keyof T>({ data, columns }: TableProps<T, K>): JSX.Element => {
     return (
-        <table style={style}>
-            <TableHeader columns={columns} />
-            <TableRows
-                data={data}
-                columns={columns}
-            />
-        </table>
+        <div className="custom-table">
+            <table style={style}>
+                <TableHeader columns={columns} />
+                <TableRows
+                    data={data}
+                    columns={columns}
+                />
+            </table>
+        </div>
     );
 };
 

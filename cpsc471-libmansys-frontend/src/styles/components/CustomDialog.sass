@@ -1,0 +1,62 @@
+@import "styles/utils/utils.sass"
+
+.custom-dialog
+  @apply text-sm
+  &--center
+    @apply fixed z-40
+    @apply flex justify-center items-center
+    @apply w-full h-full
+    > .dialog-overlay
+      @apply fixed inset-0
+      @apply opacity-60
+      background-color: $color-secondary
+    > .dialog-content
+      @apply w-96
+      @apply flex justify-center
+      @apply rounded-2xl shadow-xl
+      @apply relative flex flex-col
+      background-color: $color-common
+      > *:not(.dialog-body)
+        @apply text-base font-semibold
+        padding: $component-base-padding $component-common-padding
+      > .dialog-body
+        @apply flex-grow
+        @apply text-sm font-semibold
+      > .dialog-footer
+        @apply flex justify-end mt-auto
+  &--anchor
+    @apply fixed z-40
+    width: 30rem
+    height: 10rem
+    margin-top: $margin-primary
+    > .dialog-content
+      @apply w-full
+      @apply flex justify-center
+      @apply rounded-2xl shadow-xl
+      @apply relative flex flex-col
+      min-height: 10rem
+      background-color: $color-common
+      > *:not(.dialog-body)
+          @apply text-base font-semibold
+          padding: $component-base-padding $component-common-padding
+      > .dialog-body
+        @apply flex-grow
+        @apply text-sm font-semibold
+      > .dialog-footer
+        @apply flex justify-end w-full mt-auto
+    > .dialog-overlay
+      @apply bg-transparent
+
+.button-modal
+  @apply relative
+  margin-right: $margin-primary
+
+.input-row
+  @apply text-sm font-semibold
+  @apply grid justify-items-center
+  grid-template-columns: repeat(2, minmax(1rem, 1fr))
+  column-gap: $component-common-gap
+
+.input-element
+  @apply self-center
+  height: 1.5rem
