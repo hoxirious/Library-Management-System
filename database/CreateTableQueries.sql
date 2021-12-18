@@ -1,7 +1,7 @@
 
 -- Create new database (only use for the first creation of database) 
---CREATE DATABASE LIBRARY;
---USE LIBRARY;
+-- CREATE DATABASE LIBRARY;
+-- USE LIBRARY;
 
 
 CREATE TABLE LIBRARY (NAME varchar(255) NOT NULL, LOCATION VARCHAR(255) NOT NULL, PRIMARY KEY (NAME));
