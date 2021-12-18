@@ -1,41 +1,37 @@
-import { fetchBookList, fetchCdList, fetchMagazineList } from "apis/services";
+import {
+  addItemInfo,
+  deleteItemInfo,
+  fetchItem,
+  getItemById,
+  updateItemInfo,
+} from "apis/services";
 import { action, Action, thunk, Thunk } from "easy-peasy";
-import { BookInfo, CdInfo, MagazineInfo } from "models";
+import { ItemInfo, ItemType } from "models";
 import { StoreModel } from "store/StoreFront";
 
 interface ItemState {
-  bookList: BookInfo[];
-  cdList: CdInfo[];
-  magazineList: MagazineInfo[];
+  bookList: ItemInfo[];
+  cdList: ItemInfo[];
+  magazineList: ItemInfo[];
 }
 
 interface ItemAction {
-  setBookList: Action<ItemModel, BookInfo[]>;
-  setCdList: Action<ItemModel, CdInfo[]>;
-  setMagazineList: Action<ItemModel, MagazineInfo[]>;
+  setBookList: Action<ItemModel, ItemInfo[]>;
+  setCdList: Action<ItemModel, ItemInfo[]>;
+  setMagazineList: Action<ItemModel, ItemInfo[]>;
 }
 
 interface ItemThunk {
-  fetchBookList: Thunk<
+  fetchItem: Thunk<ItemModel, ItemType, never, StoreModel, Promise<void>>;
+  updateItemInfo: Thunk<ItemModel, ItemInfo, never, StoreModel, Promise<void>>;
+  addItemInfo: Thunk<ItemModel, ItemInfo, never, StoreModel, Promise<void>>;
+  deleteItemInfo: Thunk<ItemModel, ItemInfo, never, StoreModel, Promise<void>>;
+  fetchItemById: Thunk<
     ItemModel,
-    string | null,
+    number,
     never,
     StoreModel,
-    Promise<void>
-  >;
-  fetchCdList: Thunk<
-    ItemModel,
-    string | null,
-    never,
-    StoreModel,
-    Promise<void>
-  >;
-  fetchMagazineList: Thunk<
-    ItemModel,
-    string | null,
-    never,
-    StoreModel,
-    Promise<void>
+    Promise<ItemInfo | null>
   >;
 }
 
@@ -47,8 +43,8 @@ export const itemModel: ItemModel = {
   cdList: [],
   magazineList: [],
   // *Action
-  setBookList: action((state, bookList) => {
-    state.bookList = bookList;
+  setBookList: action((state, itemList) => {
+    state.bookList = itemList;
   }),
   setCdList: action((state, cdList) => {
     state.cdList = cdList;
@@ -58,31 +54,81 @@ export const itemModel: ItemModel = {
   }),
 
   // *Thunk
-  fetchBookList: thunk(async (actions, payload) => {
+  fetchItem: thunk(async (actions, itemType, store) => {
     try {
-      const result = await fetchBookList(payload);
-      actions.setBookList(result);
+      const result = await fetchItem(
+        store.getStoreState().authModel.userToken,
+        itemType,
+      );
+      if (!result) {
+        console.log("empty");
+        return;
+      }
+      if (result.length !== 0) {
+        if (result[0].type === "book") actions.setBookList(result);
+        else if (result[0].type === "cd") actions.setCdList(result);
+        else if (result[0].type === "magazine") actions.setMagazineList(result);
+      }
     } catch (error) {
       // todo: Handle error
       console.log(error);
     }
   }),
-  fetchCdList: thunk(async (actions, payload) => {
+  updateItemInfo: thunk(async (actions, payload, store) => {
     try {
-      const result = await fetchCdList(payload);
-      actions.setCdList(result);
+      console.log(payload);
+      console.log(store.getStoreState().authModel.userToken);
+      const result = await updateItemInfo(
+        store.getStoreState().authModel.userToken,
+        payload,
+      );
+      if (result !== -1) {
+        actions.fetchItem(payload.type);
+      } else {
+        console.log("Error updating");
+      }
+    } catch (error) {}
+  }),
+  fetchItemById: thunk(async (_, payload, store) => {
+    try {
+      const result = await getItemById(
+        store.getStoreState().authModel.userToken,
+        payload,
+      );
+      return result;
     } catch (error) {
-      // todo: Handle error
-      console.log(error);
+      console.log("Error get item by id");
+      return null;
     }
   }),
-  fetchMagazineList: thunk(async (actions, payload) => {
+  addItemInfo: thunk(async (actions, payload, store) => {
     try {
-      const result = await fetchMagazineList(payload);
-      actions.setMagazineList(result);
+      const result = await addItemInfo(
+        store.getStoreState().authModel.userToken,
+        payload,
+      );
+      if (result !== -1) {
+        actions.fetchItem(payload.type);
+      } else {
+        console.log("Error adding item");
+      }
     } catch (error) {
-      // todo: Handle error
-      console.log(error);
+      console.log("Error adding item");
+    }
+  }),
+  deleteItemInfo: thunk(async (actions, payload, store) => {
+    try {
+      const result = await deleteItemInfo(
+        store.getStoreState().authModel.userToken,
+        payload,
+      );
+      if (result !== -1) {
+        actions.fetchItem(payload.type);
+      } else {
+        console.log("Error deleting item");
+      }
+    } catch (error) {
+      console.log("Error deleting item");
     }
   }),
 };

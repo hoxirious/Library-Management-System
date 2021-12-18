@@ -11,7 +11,9 @@ export const RouterBar = ({ userType }: RouterBarProp) => {
         <div className="router-bar">
             {(userType === UserType.librarian || userType === UserType.admin) &&
                 Object.keys(routeMap).map((route) => (
+                    route !== "cart" &&
                     <ButtonRoute
+                        key={route}
                         buttonTitle={routeInfoMap[route as RouteKey].displayName}
                         buttonActive="button-route--active"
                         buttonStyle="button-route"
@@ -23,6 +25,7 @@ export const RouterBar = ({ userType }: RouterBarProp) => {
                 Object.keys(routeMap).map((route) =>
                     route !== "student" &&
                     (<ButtonRoute
+                        key={route}
                         buttonTitle={routeInfoMap[route as RouteKey].displayName}
                         buttonActive="button-route--active"
                         buttonStyle="button-route"

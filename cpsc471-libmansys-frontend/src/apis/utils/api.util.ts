@@ -34,12 +34,14 @@ export const sendRequest = async <
     const headers: Record<string, any> = { ...customHeader };
     if (useTokenInHeaders) {
       headers["Authorization"] = `Bearer ${token}`;
+      headers["Content-Type"] = "application/json";
     }
+    console.log(data);
     const baseURL = endpointInfo.endpoint + (extraPath ?? "");
     const response = await axios({
       baseURL,
       headers,
-      data,
+      data: data,
       method: endpointInfo.method,
     });
     result.result = response.data;

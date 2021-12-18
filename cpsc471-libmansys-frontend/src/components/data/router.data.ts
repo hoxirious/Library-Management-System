@@ -1,6 +1,6 @@
 import { RouteComponent, RouteInfo } from "models";
-import { BookView, CdView, MagazineView } from "views";
-import { StudentsView } from "views/StudentsView";
+import { BookView, CartView, CdView, MagazineView, ProfileView } from "views";
+import { StudentView } from "views/StudentView";
 
 export const baseRoute = "/library" as const;
 
@@ -9,13 +9,20 @@ export const routeMap = {
   magazine: "/magazine",
   cd: "/cd",
   student: "/student",
+  cart: "/cart",
+  profile: "/profile",
 } as const;
 
-const routeNameList = ["Book", "Magazine", "CD", "Students"] as const;
+export type RouteName =
+  | "Book"
+  | "Magazine"
+  | "CD"
+  | "Students"
+  | "My Cart"
+  | "My Profile";
 
 export type RouteKey = keyof typeof routeMap;
 export type RouteValue = typeof routeMap[RouteKey];
-export type RouteName = typeof routeNameList[number];
 export type PathKey = keyof typeof pathMap;
 
 const getFullPath = (extraRoute: RouteKey) => {
@@ -27,6 +34,8 @@ export const pathMap = {
   cdView: getFullPath("cd"),
   magazineView: getFullPath("magazine"),
   studentView: getFullPath("student"),
+  cartView: getFullPath("cart"),
+  profileView: getFullPath("profile"),
 } as const;
 
 export const RouteComponentList: RouteComponent[] = [
@@ -44,25 +53,41 @@ export const RouteComponentList: RouteComponent[] = [
   },
   {
     path: pathMap.studentView,
-    component: StudentsView,
+    component: StudentView,
+  },
+  {
+    path: pathMap.cartView,
+    component: CartView,
+  },
+  {
+    path: pathMap.profileView,
+    component: ProfileView,
   },
 ];
 
 export const routeInfoMap: Record<RouteKey, RouteInfo> = {
   book: {
-    displayName: routeNameList[0],
+    displayName: "Book",
     routeKey: "bookView",
   },
   magazine: {
-    displayName: routeNameList[1],
+    displayName: "Magazine",
     routeKey: "magazineView",
   },
   cd: {
-    displayName: routeNameList[2],
+    displayName: "CD",
     routeKey: "cdView",
   },
   student: {
-    displayName: routeNameList[3],
+    displayName: "Students",
     routeKey: "studentView",
+  },
+  cart: {
+    displayName: "My Cart",
+    routeKey: "cartView",
+  },
+  profile: {
+    displayName: "My Profile",
+    routeKey: "profileView",
   },
 };

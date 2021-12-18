@@ -14,7 +14,46 @@ export const itemEndpointMap = {
     method: "get",
   },
   getAllItemInfoByType: {
-    endpoint : baseEndPointMap.api + `items?type=`,
+    endpoint: baseEndPointMap.api + `items?type=`,
+    method: "get",
+  },
+  getItemInfoById: {
+    endpoint: baseEndPointMap.api + `items/`,
+    method: "get",
+  },
+  putItemInfoById: {
+    endpoint: baseEndPointMap.api + `items/`,
+    method: "put",
+  },
+  postItem: {
+    endpoint: baseEndPointMap.api + `items/`,
+    method: "post"
+  },
+  deleteItem: {
+    endpoint: baseEndPointMap.api + `items/`,
+    method: "delete"
+  }
+} as const;
+
+export const cartEndpointMap = {
+  postBorrowedItemInfo: {
+    endpoint: baseEndPointMap.api + `borrowed`,
+    method: "post",
+  },
+  getBorrowedItemForUser: {
+    endpoint: baseEndPointMap.api + `borrowed/`,
+    method: "get",
+  },
+  getBorrowedItemForAll: {
+    endpoint: baseEndPointMap.api + `borrowed/`,
+    method: "get",
+  },
+  getReturnedItemForAll: {
+    endpoint: baseEndPointMap.api + `returned/`,
+    method: "get",
+  },
+  getFinesByStudent: {
+    endpoint: baseEndPointMap.api + `fines/`,
     method: "get",
   }
 } as const;
@@ -24,4 +63,16 @@ export const loginEndpointMap = {
     endpoint: baseEndPointMap.api + `login`,
     method: "post",
   },
+  getStudentInfoById: {
+    endpoint: baseEndPointMap.api + `students/`,
+    method: "get",
+  },
+  registerStudent: {
+    endpoint: baseEndPointMap.api + `students`,
+    method: "post",
+  },
+  getLibrarianInfoById: {
+    endpoint: baseEndPointMap.api + `librarians/`,
+    method: "get",
+  }
 } as const;
