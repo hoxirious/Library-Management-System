@@ -10,7 +10,7 @@ const secret = process.env.JWT_SECRET;
 
 export const authenticateJWT = (req: Request, res: Response, next: Function) => {
   
-  if (req.path == '/login' && req.method == 'POST') return next();
+  if ((req.path == '/login' && req.method == 'POST') || (req.path == '/students' && req.method == 'POST')) return next();
 
   const authHeader = req.headers.authorization;
 
