@@ -52,6 +52,10 @@ export const cartEndpointMap = {
     endpoint: baseEndPointMap.api + `returned/`,
     method: "get",
   },
+  postReturned: {
+    endpoint: baseEndPointMap.api + `returned`,
+    method: "post",
+  },
   getFinesByStudent: {
     endpoint: baseEndPointMap.api + `fines/`,
     method: "get",
@@ -66,6 +70,14 @@ export const loginEndpointMap = {
   getStudentInfoById: {
     endpoint: baseEndPointMap.api + `students/`,
     method: "get",
+  },
+  patchStudentInfo: {
+    endpoint: baseEndPointMap.api + `students/`,
+    method: "patch",
+  },
+  patchLibrarianInfo: {
+    endpoint: baseEndPointMap.api + `librarians/`,
+    method: "patch",
   },
   registerStudent: {
     endpoint: baseEndPointMap.api + `students`,

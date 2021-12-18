@@ -4,6 +4,7 @@ import {
   fetchReturnedForAll,
   getFinesByStudent,
   postCart,
+  postReturned,
 } from "apis/services";
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import {
@@ -33,6 +34,13 @@ interface CartAction {
 
 interface CartThunk {
   postCart: Thunk<CartModel, never, never, StoreModel, Promise<void>>;
+  postReturned: Thunk<
+    CartModel,
+    ReturnedItemInfo,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
   fetchFine: Thunk<CartModel, never, never, StoreModel, Promise<void>>;
   fetchBorrowedForUser: Thunk<
     CartModel,
@@ -106,6 +114,13 @@ export const cartModel: CartModel = {
       console.log(error);
     }
   }),
+  postReturned: thunk(async (_, payload, store) => {
+    try {
+      await postReturned(store.getStoreState().authModel.userToken, payload);
+    } catch (error) {
+      console.log(error);
+    }
+  }),
   fetchFine: thunk(async (actions, _, store) => {
     try {
       const result = await getFinesByStudent(
@@ -126,6 +141,13 @@ export const cartModel: CartModel = {
         store.getStoreState().authModel.user_id,
       );
       if (result) {
+        let arrayS: BorrowedItemInfo[] = [];
+        result.forEach((item) => {
+          let temp = item;
+          temp.date = item.date.split("T")[0];
+          temp.overdue = item.overdue.toString();
+          arrayS.push(temp);
+        });
         actions.setBorrowedList(result);
       }
     } catch (error) {
@@ -141,6 +163,7 @@ export const cartModel: CartModel = {
         let arrayS: BorrowedItemInfo[] = [];
         result.forEach((item) => {
           let temp = item;
+          temp.date = item.date.split("T")[0];
           temp.overdue = item.overdue.toString();
           arrayS.push(temp);
         });
@@ -157,7 +180,14 @@ export const cartModel: CartModel = {
         store.getStoreState().authModel.userToken,
       );
       if (result) {
-        actions.setReturnedList(result);
+        let arrayS: ReturnedItemInfo[] = [];
+        result.forEach((item) => {
+          let temp = item;
+          temp.borrow_date = item.borrow_date.split("T")[0];
+          temp.return_date = item.return_date.split("T")[0];
+          arrayS.push(temp);
+        });
+        actions.setReturnedList(arrayS);
       }
     } catch (error) {
       console.log(error);

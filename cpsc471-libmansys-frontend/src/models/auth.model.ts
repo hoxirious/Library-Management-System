@@ -53,9 +53,18 @@ export interface StudentInfo {
   phone: string;
   username: string;
 }
+export interface StudentPatchInfo {
+  name: string;
+  faculty: string;
+  phone: string;
+}
+
 export interface LibrarianInfo {
   librarian_id: number;
   library: string;
   name: string;
   username: string;
+}
+export interface LibrarianPatchInfo {
+  name: string;
 }

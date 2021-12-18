@@ -2,9 +2,11 @@ import { loginEndpointMap } from "apis/data";
 import { sendRequest } from "apis/utils";
 import {
   LibrarianInfo,
+  LibrarianPatchInfo,
   LoginInfo,
   LoginReturnInfo,
   StudentInfo,
+  StudentPatchInfo,
   StudentRegisterInfo,
 } from "models";
 
@@ -50,6 +52,40 @@ export async function fetchStudentInfo(
     return result.result ?? null;
   }
   return null;
+}
+export async function patchStudentInfo(
+  token: string | null,
+  student_id: number | null,
+  data: StudentPatchInfo,
+): Promise<void> {
+  if (token && student_id) {
+    await sendRequest<StudentPatchInfo, Promise<void>>({
+      endpointInfo: {
+        endpoint: loginEndpointMap.patchStudentInfo.endpoint + student_id,
+        method: loginEndpointMap.patchStudentInfo.method,
+      },
+      data,
+      useTokenInHeaders: true,
+      token: token,
+    });
+  }
+}
+export async function patchLibrarianInfo(
+  token: string | null,
+  librarian_id: number | null,
+  data: LibrarianPatchInfo,
+): Promise<void> {
+  if (token && librarian_id) {
+    await sendRequest<LibrarianPatchInfo, Promise<void>>({
+      endpointInfo: {
+        endpoint: loginEndpointMap.patchLibrarianInfo.endpoint + librarian_id,
+        method: loginEndpointMap.patchLibrarianInfo.method,
+      },
+      data,
+      useTokenInHeaders: true,
+      token: token,
+    });
+  }
 }
 export async function fetchLibrarianInfo(
   token: string | null,

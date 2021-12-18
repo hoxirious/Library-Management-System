@@ -1,4 +1,11 @@
-import { fetchLibrarianInfo, fetchStudentInfo, login, register } from "apis/services/users.service";
+import {
+  fetchLibrarianInfo,
+  fetchStudentInfo,
+  login,
+  patchLibrarianInfo,
+  patchStudentInfo,
+  register,
+} from "apis/services/users.service";
 import {
   action,
   Action,
@@ -8,7 +15,15 @@ import {
   thunk,
   Thunk,
 } from "easy-peasy";
-import { LibrarianInfo, LoginInfo, StudentInfo, StudentRegisterInfo, UserTypeValue } from "models";
+import {
+  LibrarianInfo,
+  LibrarianPatchInfo,
+  LoginInfo,
+  StudentInfo,
+  StudentPatchInfo,
+  StudentRegisterInfo,
+  UserTypeValue,
+} from "models";
 import { StoreModel } from "store/StoreFront";
 
 interface AuthState {
@@ -32,9 +47,29 @@ interface AuthAction {
 interface AuthThunk {
   login: Thunk<AuthModel, LoginInfo, never, StoreModel, Promise<void>>;
   logout: Thunk<AuthModel, never, never, StoreModel, void>;
-  register: Thunk<AuthModel, StudentRegisterInfo, never, StoreModel, Promise<void>>;
+  register: Thunk<
+    AuthModel,
+    StudentRegisterInfo,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
   fetchStudentInfo: Thunk<AuthModel, never, never, StoreModel, Promise<void>>;
+  updateStudentInfo: Thunk<
+    AuthModel,
+    StudentPatchInfo,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
   fetchLibrarianInfo: Thunk<AuthModel, never, never, StoreModel, Promise<void>>;
+  updateLibrarianInfo: Thunk<
+    AuthModel,
+    LibrarianPatchInfo,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
 }
 
 export interface AuthModel extends AuthState, AuthAction, AuthThunk {}
@@ -102,23 +137,43 @@ export const authModel: AuthModel = persist({
         store.getState().userToken,
         store.getState().user_id,
       );
-      if(result){
+      if (result) {
         actions.setStudentInfo(result);
       }
     } catch (error) {}
   }),
+
+  updateStudentInfo: thunk(async (_, payload, store) => {
+    try {
+      await patchStudentInfo(
+        store.getState().userToken,
+        store.getState().user_id,
+        payload,
+      );
+    } catch (error) {}
+  }),
+
   fetchLibrarianInfo: thunk(async (actions, _, store) => {
     try {
       const result = await fetchLibrarianInfo(
         store.getState().userToken,
         store.getState().user_id,
       );
-      if(result){
+      if (result) {
         actions.setLibrarianInfo(result);
       }
     } catch (error) {}
   }),
 
+  updateLibrarianInfo: thunk(async (_, payload, store) => {
+    try {
+      await patchLibrarianInfo(
+        store.getState().userToken,
+        store.getState().user_id,
+        payload,
+      );
+    } catch (error) {}
+  }),
 
   allow: ["userToken"],
 });

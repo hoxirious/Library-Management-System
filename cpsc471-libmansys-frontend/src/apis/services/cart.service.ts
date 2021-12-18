@@ -29,6 +29,19 @@ export const postCart = async (
     });
   }
 };
+export const postReturned = async (
+  token: string | null,
+  item: ReturnedItemInfo,
+): Promise<void> => {
+  if (token) {
+    await sendRequest<ReturnedItemInfo, Promise<void>>({
+      endpointInfo: cartEndpointMap.postReturned,
+      useTokenInHeaders: true,
+      data: item,
+      token: token,
+    });
+  }
+};
 
 export async function getFinesByStudent(
   token: string | null,
@@ -74,8 +87,7 @@ export async function fetchBorrowedForAll(
   if (token) {
     const result = await sendRequest<never, BorrowedItemInfo[]>({
       endpointInfo: {
-        endpoint:
-          cartEndpointMap.getBorrowedItemForAll.endpoint ,
+        endpoint: cartEndpointMap.getBorrowedItemForAll.endpoint,
         method: cartEndpointMap.getBorrowedItemForAll.method,
       },
       useTokenInHeaders: true,
@@ -92,8 +104,7 @@ export async function fetchReturnedForAll(
   if (token) {
     const result = await sendRequest<never, ReturnedItemInfo[]>({
       endpointInfo: {
-        endpoint:
-          cartEndpointMap.getReturnedItemForAll.endpoint ,
+        endpoint: cartEndpointMap.getReturnedItemForAll.endpoint,
         method: cartEndpointMap.getReturnedItemForAll.method,
       },
       useTokenInHeaders: true,
