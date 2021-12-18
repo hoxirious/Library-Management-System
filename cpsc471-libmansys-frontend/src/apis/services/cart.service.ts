@@ -5,6 +5,7 @@ import {
   CartElementInfo,
   CartElementPayload,
   FineInfo,
+  ReturnedItemInfo,
 } from "models";
 
 export const postCart = async (
@@ -57,6 +58,43 @@ export async function fetchBorrowedForUser(
         endpoint:
           cartEndpointMap.getBorrowedItemForUser.endpoint + `${student_id}`,
         method: cartEndpointMap.getBorrowedItemForUser.method,
+      },
+      useTokenInHeaders: true,
+      token: token,
+    });
+    console.log(result.result);
+    return result.result ?? [];
+  }
+  return [];
+}
+
+export async function fetchBorrowedForAll(
+  token: string | null,
+): Promise<BorrowedItemInfo[]> {
+  if (token) {
+    const result = await sendRequest<never, BorrowedItemInfo[]>({
+      endpointInfo: {
+        endpoint:
+          cartEndpointMap.getBorrowedItemForAll.endpoint ,
+        method: cartEndpointMap.getBorrowedItemForAll.method,
+      },
+      useTokenInHeaders: true,
+      token: token,
+    });
+    console.log(result.result);
+    return result.result ?? [];
+  }
+  return [];
+}
+export async function fetchReturnedForAll(
+  token: string | null,
+): Promise<ReturnedItemInfo[]> {
+  if (token) {
+    const result = await sendRequest<never, ReturnedItemInfo[]>({
+      endpointInfo: {
+        endpoint:
+          cartEndpointMap.getReturnedItemForAll.endpoint ,
+        method: cartEndpointMap.getReturnedItemForAll.method,
       },
       useTokenInHeaders: true,
       token: token,

@@ -1,10 +1,18 @@
 import {
+  fetchBorrowedForAll,
   fetchBorrowedForUser,
+  fetchReturnedForAll,
   getFinesByStudent,
   postCart,
 } from "apis/services";
 import { action, Action, thunk, Thunk } from "easy-peasy";
-import { BorrowedItemInfo, CartElementInfo, FineInfo, ItemInfo } from "models";
+import {
+  BorrowedItemInfo,
+  CartElementInfo,
+  FineInfo,
+  ItemInfo,
+  ReturnedItemInfo,
+} from "models";
 import { StoreModel } from "store/StoreFront";
 
 interface CartState {
@@ -12,12 +20,14 @@ interface CartState {
   myCartDetail: ItemInfo[];
   fineList: FineInfo[];
   borrowedList: BorrowedItemInfo[];
+  returnedList: ReturnedItemInfo[];
 }
 
 interface CartAction {
   addToCart: Action<CartModel, CartElementInfo>;
   setFineList: Action<CartModel, FineInfo[]>;
   setBorrowedList: Action<CartModel, BorrowedItemInfo[]>;
+  setReturnedList: Action<CartModel, ReturnedItemInfo[]>;
   setMyCartDetail: Action<CartModel, ItemInfo[]>;
 }
 
@@ -25,6 +35,20 @@ interface CartThunk {
   postCart: Thunk<CartModel, never, never, StoreModel, Promise<void>>;
   fetchFine: Thunk<CartModel, never, never, StoreModel, Promise<void>>;
   fetchBorrowedForUser: Thunk<
+    CartModel,
+    never,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
+  fetchBorrowedForAll: Thunk<
+    CartModel,
+    never,
+    never,
+    StoreModel,
+    Promise<void>
+  >;
+  fetchReturnedForAll: Thunk<
     CartModel,
     never,
     never,
@@ -40,6 +64,7 @@ export const cartModel: CartModel = {
   myCart: [],
   fineList: [],
   borrowedList: [],
+  returnedList: [],
   myCartDetail: [],
   // *Action
   addToCart: action((state, newItem) => {
@@ -61,6 +86,9 @@ export const cartModel: CartModel = {
   }),
   setBorrowedList: action((state, borrowedList) => {
     state.borrowedList = borrowedList;
+  }),
+  setReturnedList: action((state, returnedList) => {
+    state.returnedList = returnedList;
   }),
   setMyCartDetail: action((state, cartDetail) => {
     state.myCartDetail = cartDetail;
@@ -98,8 +126,38 @@ export const cartModel: CartModel = {
         store.getStoreState().authModel.user_id,
       );
       if (result) {
-        console.log(result);
         actions.setBorrowedList(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+  fetchBorrowedForAll: thunk(async (actions, _, store) => {
+    try {
+      const result = await fetchBorrowedForAll(
+        store.getStoreState().authModel.userToken,
+      );
+      if (result) {
+        let arrayS: BorrowedItemInfo[] = [];
+        result.forEach((item) => {
+          let temp = item;
+          temp.overdue = item.overdue.toString();
+          arrayS.push(temp);
+        });
+
+        actions.setBorrowedList(arrayS);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+  fetchReturnedForAll: thunk(async (actions, _, store) => {
+    try {
+      const result = await fetchReturnedForAll(
+        store.getStoreState().authModel.userToken,
+      );
+      if (result) {
+        actions.setReturnedList(result);
       }
     } catch (error) {
       console.log(error);

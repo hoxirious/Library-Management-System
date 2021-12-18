@@ -44,6 +44,14 @@ export const cartEndpointMap = {
     endpoint: baseEndPointMap.api + `borrowed/`,
     method: "get",
   },
+  getBorrowedItemForAll: {
+    endpoint: baseEndPointMap.api + `borrowed/`,
+    method: "get",
+  },
+  getReturnedItemForAll: {
+    endpoint: baseEndPointMap.api + `returned/`,
+    method: "get",
+  },
   getFinesByStudent: {
     endpoint: baseEndPointMap.api + `fines/`,
     method: "get",
@@ -57,6 +65,14 @@ export const loginEndpointMap = {
   },
   getStudentInfoById: {
     endpoint: baseEndPointMap.api + `students/`,
+    method: "get",
+  },
+  registerStudent: {
+    endpoint: baseEndPointMap.api + `students`,
+    method: "post",
+  },
+  getLibrarianInfoById: {
+    endpoint: baseEndPointMap.api + `librarians/`,
     method: "get",
   }
 } as const;

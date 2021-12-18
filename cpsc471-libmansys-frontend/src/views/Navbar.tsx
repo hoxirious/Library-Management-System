@@ -10,7 +10,7 @@ export const Navbar = () => {
             <div className="navbar__content">
                 <div className="navbar__content--block-left">
                     <p className="logo">LIBMANSYS.</p>
-                    <input placeholder="Search your item" className="search"></input>
+                    {/* <input placeholder="Search your item" className="search"></input> */}
                 </div>
                 <div className="navbar__content--block-right">
                     <ButtonAction

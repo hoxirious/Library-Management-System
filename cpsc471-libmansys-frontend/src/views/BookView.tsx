@@ -65,7 +65,7 @@ export const BookView = () => {
             console.log("add item");
             addItemInfo(item);
         }
-        else {
+        else if (selectedId === "Remove Item") {
             console.log("delete item");
             deleteItemInfo(item);
         }

@@ -1,4 +1,4 @@
-import { fetchStudentInfo, login } from "apis/services/users.service";
+import { fetchLibrarianInfo, fetchStudentInfo, login, register } from "apis/services/users.service";
 import {
   action,
   Action,
@@ -8,7 +8,7 @@ import {
   thunk,
   Thunk,
 } from "easy-peasy";
-import { LoginInfo, StudentInfo, UserTypeValue } from "models";
+import { LibrarianInfo, LoginInfo, StudentInfo, StudentRegisterInfo, UserTypeValue } from "models";
 import { StoreModel } from "store/StoreFront";
 
 interface AuthState {
@@ -17,6 +17,7 @@ interface AuthState {
   userType: UserTypeValue | null;
   user_id: number | null;
   studentInfo: StudentInfo | null;
+  librarianInfo: LibrarianInfo | null;
 }
 
 interface AuthAction {
@@ -25,12 +26,15 @@ interface AuthAction {
   setUserType: Action<AuthModel, UserTypeValue | null>;
   setUser_id: Action<AuthModel, number | null>;
   setStudentInfo: Action<AuthModel, StudentInfo | null>;
+  setLibrarianInfo: Action<AuthModel, LibrarianInfo | null>;
 }
 
 interface AuthThunk {
   login: Thunk<AuthModel, LoginInfo, never, StoreModel, Promise<void>>;
   logout: Thunk<AuthModel, never, never, StoreModel, void>;
+  register: Thunk<AuthModel, StudentRegisterInfo, never, StoreModel, Promise<void>>;
   fetchStudentInfo: Thunk<AuthModel, never, never, StoreModel, Promise<void>>;
+  fetchLibrarianInfo: Thunk<AuthModel, never, never, StoreModel, Promise<void>>;
 }
 
 export interface AuthModel extends AuthState, AuthAction, AuthThunk {}
@@ -41,6 +45,7 @@ export const authModel: AuthModel = persist({
   userType: null,
   user_id: null,
   studentInfo: null,
+  librarianInfo: null,
   isLogin: computed((state) => state.userToken !== null),
 
   // *Action
@@ -58,6 +63,9 @@ export const authModel: AuthModel = persist({
   }),
   setStudentInfo: action((state, payload) => {
     state.studentInfo = payload;
+  }),
+  setLibrarianInfo: action((state, payload) => {
+    state.librarianInfo = payload;
   }),
 
   // *Thunk
@@ -79,6 +87,15 @@ export const authModel: AuthModel = persist({
     actions.setUser_id(null);
   }),
 
+  register: thunk(async (_, payload) => {
+    try {
+      const res = await register(payload);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }),
+
   fetchStudentInfo: thunk(async (actions, _, store) => {
     try {
       const result = await fetchStudentInfo(
@@ -90,5 +107,18 @@ export const authModel: AuthModel = persist({
       }
     } catch (error) {}
   }),
+  fetchLibrarianInfo: thunk(async (actions, _, store) => {
+    try {
+      const result = await fetchLibrarianInfo(
+        store.getState().userToken,
+        store.getState().user_id,
+      );
+      if(result){
+        actions.setLibrarianInfo(result);
+      }
+    } catch (error) {}
+  }),
+
+
   allow: ["userToken"],
 });

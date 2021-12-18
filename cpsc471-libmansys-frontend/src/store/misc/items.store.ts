@@ -64,7 +64,7 @@ export const itemModel: ItemModel = {
         console.log("empty");
         return;
       }
-      if (result.length !==0) {
+      if (result.length !== 0) {
         if (result[0].type === "book") actions.setBookList(result);
         else if (result[0].type === "cd") actions.setCdList(result);
         else if (result[0].type === "magazine") actions.setMagazineList(result);

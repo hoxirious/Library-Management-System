@@ -18,5 +18,11 @@ export interface BorrowedItemInfo {
   student_id: number;
   item_id: number;
   date: string;
-  overdue: boolean;
+  overdue: string;
+}
+export interface ReturnedItemInfo {
+  student_id: number;
+  item_id: number;
+  borrow_date: string;
+  return_date: string;
 }

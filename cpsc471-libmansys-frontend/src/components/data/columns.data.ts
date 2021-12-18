@@ -1,5 +1,5 @@
 import { ColumnDefinitionType } from "components/common/Table";
-import { BookInfo, CdInfo, MagazineInfo } from "models";
+import { BookInfo, BorrowedItemInfo, CdInfo, MagazineInfo, ReturnedItemInfo } from "models";
 
 export const bookColumns: ColumnDefinitionType<BookInfo, keyof BookInfo>[] = [
   {
@@ -124,5 +124,41 @@ export const cdColumns: ColumnDefinitionType<CdInfo, keyof CdInfo>[] = [
   {
     key: "length",
     header: "Length",
+  },
+];
+export const borrowedColumns: ColumnDefinitionType<BorrowedItemInfo, keyof BorrowedItemInfo>[] = [
+  {
+    key: "student_id",
+    header: "Student Id",
+  },
+  {
+    key: "item_id",
+    header: "Item Id",
+  },
+  {
+    key: "date",
+    header: "Borrowed Date",
+  },
+  {
+    key: "overdue",
+    header: "Overdue",
+  },
+];
+export const returnedColumns: ColumnDefinitionType<ReturnedItemInfo, keyof ReturnedItemInfo>[] = [
+  {
+    key: "student_id",
+    header: "Student Id",
+  },
+  {
+    key: "item_id",
+    header: "Item Id",
+  },
+  {
+    key: "borrow_date",
+    header: "Borrowed Date",
+  },
+  {
+    key: "return_date",
+    header: "Returned Date",
   },
 ];

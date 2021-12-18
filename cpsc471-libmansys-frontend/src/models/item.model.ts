@@ -47,6 +47,10 @@ export const TitleMap = {
   length: "Length",
   author_id: "Author Id",
   pages: "Number of pages",
+  student_id: "Student Id",
+  borrowed_date: "Borrowed Date",
+  returned_date: "Returned Date",
+  overdue: "Overdue"
 } as const;
 
 export type TitleKey = keyof typeof TitleMap;

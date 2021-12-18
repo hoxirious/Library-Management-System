@@ -1,6 +1,6 @@
 import { RouteComponent, RouteInfo } from "models";
 import { BookView, CartView, CdView, MagazineView, ProfileView } from "views";
-import { StudentsView } from "views/StudentsView";
+import { StudentView } from "views/StudentView";
 
 export const baseRoute = "/library" as const;
 
@@ -53,7 +53,7 @@ export const RouteComponentList: RouteComponent[] = [
   },
   {
     path: pathMap.studentView,
-    component: StudentsView,
+    component: StudentView,
   },
   {
     path: pathMap.cartView,

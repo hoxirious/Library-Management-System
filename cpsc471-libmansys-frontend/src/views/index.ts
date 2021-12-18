@@ -5,4 +5,4 @@ export * from "./CdView";
 export * from "./MagazineView";
 export * from "./ProfileView";
 export * from "./CartView";
-export * from "./StudentsView";
+export * from "./StudentView";
