@@ -6,3 +6,4 @@ export * from "./MagazineView";
 export * from "./ProfileView";
 export * from "./CartView";
 export * from "./StudentView";
+export * from "./ItemCard";

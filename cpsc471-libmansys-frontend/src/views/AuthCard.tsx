@@ -1,14 +1,16 @@
-import { ButtonAction, CustomDialog } from "components/common"
-import { InputRegisterMap, LabelRegisterMap, LoginInfo, RegistrationTypeKey, StudentRegisterInfo } from "models";
+import { ButtonAction, CustomDialog } from "components/common";
+import { AuthInput, LoginInfo, StudentRegisterInfo } from "models";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { useStoreActions, useStoreState } from "store/StoreFront"
-import "styles/views/AuthCard.sass"
+import { useStoreActions, useStoreState } from "store/StoreFront";
+import "styles/views/AuthCard.sass";
 
 export const AuthCard = () => {
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+
 
     const [name, setName] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
@@ -23,6 +25,63 @@ export const AuthCard = () => {
     const { isLogin } = useStoreState((store) => {
         return store.authModel;
     });
+
+    const authInputMapperList: AuthInput[] = [
+        {
+            title: "Student Name",
+            input: {
+                type: "text",
+                placeholder: "Input your name",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
+        },
+        {
+            title: "Student Phone",
+            input: {
+                type: "text",
+                placeholder: "Input your phone",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value),
+        },
+        {
+            title: "Student Faculty",
+            input: {
+                type: "text",
+                placeholder: "Input your faculty",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFaculty(e.target.value),
+        },
+        {
+            title: "Username",
+            input: {
+                type: "text",
+                placeholder: "Input your userName",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
+        },
+        {
+            title: "Password",
+            input: {
+                type: "password",
+                placeholder: "Input your password",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
+        },
+        {
+            title: "Library Name",
+            input: {
+                type: "text",
+                placeholder: "Input your library",
+                className: "input-element"
+            },
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setLibrary(e.target.value),
+        },
+    ]
 
 
     const openFilterModal = () => {
@@ -93,50 +152,15 @@ export const AuthCard = () => {
                 onClose={closeFilterModal}
             >
                 <div>
-                    {/* {Object.keys(LabelRegisterMap).map((labelKey) => {
+                    {authInputMapperList.map(input => {
                         return (
                             <div className="input-row">
-                                <input id={labelKey} type={InputRegisterMap[labelKey as RegistrationTypeKey]} placeholder={LabelRegisterMap[labelKey as RegistrationTypeKey]}></input>
+                                <p>{input.title}</p>
+                                <input {...input.input} onChange={input.onChange} />
                             </div>
                         )
-                    })
-                    } */}
-                    <div className="input-row">
-                        <p>Student Name</p>
-                        <input type="text" className="input-element" value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="input-row">
-                        <p>Faculty</p>
-                        <input type="text" className="input-element" value={faculty}
-                            onChange={(e) => setFaculty(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="input-row">
-                        <p>Phone Number</p>
-                        <input type="text" className="input-element" value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="input-row">
-                        <p>Username</p>
-                        <input type="text" className="input-element" value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="input-row">
-                        <p>Password</p>
-                        <input type="password" className="input-element" value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="input-row">
-                        <p>Library</p>
-                        <input type="text" className="input-element" value={library}
-                            onChange={(e) => setLibrary(e.target.value)}
-                        ></input>
-                    </div>
+                    })}
+
                 </div>
             </CustomDialog>
         </div >

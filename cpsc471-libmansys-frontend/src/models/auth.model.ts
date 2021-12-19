@@ -1,3 +1,4 @@
+
 export interface LoginInfo {
   library: string;
   username: string;
@@ -18,25 +19,12 @@ export interface StudentRegisterInfo {
   library: string;
 }
 
-export const InputRegisterMap = {
-  name: "text",
-  faculty: "text",
-  phone: "text",
-  username: "text",
-  password: "password",
-  library: "text",
-} as const;
+export interface AuthInput {
+  title: string,
+  input: { type: string; placeholder: string; className: string };
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-export const LabelRegisterMap = {
-  name: "Input your name",
-  faculty: "Input your faculty",
-  phone: "Input your phone",
-  username: "Input your username",
-  password: "Input your password",
-  library: "Input your library",
-} as const;
-
-export type RegistrationTypeKey = keyof typeof LabelRegisterMap;
 export type UserTypeKey = keyof typeof UserType;
 export type UserTypeValue = typeof UserType[keyof typeof UserType];
 

@@ -72,6 +72,17 @@ export const StudentView = () => {
                 }
                 onClose={closeFilterModal}
             >
+                { /* {Object.keys(TitleMap).map((titleKey) =>
+                        <div className="input-row">
+                            <p>{TitleMap[titleKey as TitleKey]}</p>
+                            <input type="text" id={titleKey} className="input-element"
+                                value={name}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                    setName(e.target.value)
+                                }
+                            ></input>
+                        </div>
+                    )} */}
                 <div>
                     <div className="input-row">
                         <p>Student Id</p>

@@ -50,8 +50,14 @@ export const TitleMap = {
   student_id: "Student Id",
   borrowed_date: "Borrowed Date",
   returned_date: "Returned Date",
-  overdue: "Overdue"
+  overdue: "Overdue",
 } as const;
+
+export interface ItemInput {
+  title: TitleValue;
+  input: { type: string; value: string | number; className: string };
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 export type TitleKey = keyof typeof TitleMap;
 export type ItemType = "book" | "cd" | "magazine";
