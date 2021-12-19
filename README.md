@@ -21,7 +21,14 @@ Similar to the database, you have 2 options here: you can set up your own `.env`
     - `DB_PASS`: The MySQL user's password.
     - `DB_NAME`: The name of the database to connect to. This will almost always be `"library"`.
     - `JWT_SECRET`: The secret to use for JWT authentication. Can be any string you want.
-    - Here is an example `.env` file, set up to use the AWS database and a JWT secret of "supersecretsecret": ![Imgur](https://imgur.com/IQyC6WX.jpg)
+    - Here is an example `.env` file, set up to use the AWS database and a JWT secret of "supersecretsecret":
+      ```
+      DB_HOST="database-1.c8hq2lzw6okk.us-west-1.rds.amazonaws.com"
+      DB_USER="root"
+      DB_PASS="password"
+      DB_NAME="library"
+      JWT_SECRET="supersecretsecret"
+      ```
 
   After setting up your `.env` file, to start the API you just need to navigate to the `backend-api` folder and run `npm start`. If you have not yet run `npm install`, you will need to do that first. Once the server is started, you will direct all API requests to `http://localhost:3001`, followed by the endpoint. For example, to connect to the `/api/login` endpoint, you would send a request to `http://localhost:3001/api/login`.
 
