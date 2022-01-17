@@ -10,7 +10,7 @@ There are 2 options for connecting to the database:
 - We have also hosted a database on AWS RDS. If you want to use this database, see the section below about setting up your `.env` file for the API.
 
 ## The ExpressJS API
-### Connecting to the API
+### Connecting to the API (The Endpoint for database and backend has been taken down! Please use the local option!)
 Similar to the database, you have 2 options here: you can set up your own `.env` file and start an instance of the API locally, or you can use the instance of the API that we have hosted on AWS Elastic Beanstalk. The API hosted on AWS is also automatically connected to the database hosted on AWS.
 
 - The simplest way to use the API is to use the instance hosted on AWS. Simply direct all API requests to the base address `backend-env-1.eba-gjinncph.us-west-1.elasticbeanstalk.com`, followed by the endpoint. For example, to connect to the `/api/login` endpoint, you would send a request to `backend-env-1.eba-gjinncph.us-west-1.elasticbeanstalk.com/api/login`.
